@@ -1,11 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
+const mongo = require('./config/mongo');
 
 const cookieRoutes = require('./routes/cookieRoutes');
 const domainRoutes = require('./routes/domainRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 const PORT = process.env.PORT;
+//connect to mongoDB
+mongo();
 
 const app = express();
 

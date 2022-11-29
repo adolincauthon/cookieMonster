@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 /*
     @access      : private
-    @description : adds cookie to user's accoutn
+    @description : adds cookie to user's account
 */
 router.post('/', (req, res) => {
   res.json('Cookie Route');
