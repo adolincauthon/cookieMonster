@@ -1,4 +1,6 @@
 const express = require('express');
+const { getDomains, postDomain } = require('../controllers/domainController');
+const decodeToken = require('../middleware/decodeToken');
 
 const router = express.Router();
 
@@ -6,17 +8,13 @@ const router = express.Router();
     @access      : public
     @description : returns all of users domains
 */
-router.get('/', (req, res) => {
-  res.json('Domain Route');
-});
+router.get('/', decodeToken, getDomains);
 
 /*
       @access      : private
       @description : adds domain to user's account
 */
-router.post('/', (req, res) => {
-  res.json('Domain Route');
-});
+router.post('/', decodeToken, postDomain);
 
 /*
       @access      : public
@@ -35,7 +33,7 @@ router.get('/:id/cookies', (req, res) => {
 });
 
 /*
-      @access      : public
+      @access    od  : public
       @description : returns  all of domain and category specific cookies
   */
 router.get('/:id/:category', (req, res) => {

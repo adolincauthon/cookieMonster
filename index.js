@@ -6,6 +6,8 @@ const cookieRoutes = require('./routes/cookieRoutes');
 const domainRoutes = require('./routes/domainRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+const errorHandler = require('./middleware/errorHandler');
+
 const PORT = process.env.PORT;
 //connect to mongoDB
 mongo();
@@ -24,6 +26,8 @@ app.get('/', (req, res) => {
 app.use('/cookies', cookieRoutes);
 app.use('/domains', domainRoutes);
 app.use('/user', userRoutes);
+
+app.use(errorHandler);
 
 console.log(`Listening on Port: ${PORT}`);
 app.listen(PORT);

@@ -12,8 +12,9 @@ const postUser = async (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(password, salt, async (err, hash) => {
       try {
-        const check = User.findOne({ email: email });
+        const check = await User.findOne({ email: email });
         if (check) {
+          console.log(check);
           throw 'User already exists, try to login';
         }
         //create and save user
@@ -44,7 +45,7 @@ const postUser = async (req, res) => {
           throw 'Error Saving User';
         }
       } catch (e) {
-        res.status(500).json({ error: `Server Error: ${e}` });
+        next(e);
       }
     });
   });
@@ -68,6 +69,22 @@ const getUser = async (req, res) => {
   } else {
     res.status(403).json({ error: 'Invalid Credentials' });
   }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const { email, password, salt } = req.body;
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      res.status(403).json({ error: 'Invalid Credentials' });
+    }
+    const result = await bcrypt.compare(password, user.password);
+    if (result) {
+    } else {
+      res.status(403).json;
+    }
+  } catch (error) {}
 };
 
 module.exports = {
